@@ -4,7 +4,11 @@ const cors = require('cors');
 
 app.use(cors())
 
+const dotenv = require("dotenv");
+
 app.use(express.json());
+
+dotenv.config({ path: "Backend/config/config.env" });
 
 // Importing the routes
 const products = require('./routes/product');
