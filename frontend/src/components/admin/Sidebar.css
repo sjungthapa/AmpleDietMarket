@@ -1,0 +1,50 @@
+/* Assuming you're using a separate CSS file for the Sidebar */
+
+.sidebar-wrapper {
+  display: flex; /* Allow sidebar to expand/collapse horizontally */
+  flex-direction: column; /* Stack items vertically */
+  width: 250px; /* Set sidebar width */
+  height: 100vh; /* Full viewport height */
+  background-color: #f0f0f0; /* Light gray background */
+  border-right: 1px solid #ddd; /* Optional border */
+  padding: 15px; /* Add some padding inside */
+}
+
+#sidebar {
+  width: 100%; /* Match sidebar wrapper width */
+}
+
+.list-unstyled {
+  list-style: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.list-unstyled li {
+  margin-bottom: 10px; /* Space between list items */
+}
+
+.list-unstyled li a,
+.list-unstyled li Link {
+  display: block; /* Make links fill entire list item width */
+  padding: 10px 15px; /* Add padding for links */
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Text color */
+}
+
+.list-unstyled li a:hover,
+.list-unstyled li Link:hover {
+  background-color: #eee; /* Highlight on hover */
+  color: #000; /* Darker text on hover */
+}
+
+.list-unstyled li.active a,
+.list-unstyled li.active Link {
+  background-color: #ddd; /* Active link background */
+  color: #000; /* Active text color */
+}
+
+.fa { /* Font Awesome icons */
+  font-size: 18px; /* Adjust icon size */
+  margin-right: 10px; /* Space between icon and text */
+}

@@ -1,0 +1,13 @@
+{
+    "name" : "Milk",
+    "price" : "20.00",
+    "description" : "Good for health",
+    "rating" : "2,65",
+    "images" : [{
+        "url" : "https://prestock.cabovillas.com/wp-content/uploads/2023/12/Whole-Milk-1-768x977.jpg"
+    }],
+    "category" : "Dairy",
+    "stock" : "5",
+    "numOfReviews" : "5",
+    "reviews" : []
+}

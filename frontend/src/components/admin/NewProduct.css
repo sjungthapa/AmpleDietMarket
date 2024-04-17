@@ -1,0 +1,108 @@
+/* Overall styling */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5; /* Light background */
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto; /* Center the content horizontally */
+  max-width: 1140px; /* Limit container width */
+  padding: 20px;
+}
+
+/* Sidebar styling (assuming you have a separate CSS file for Sidebar) */
+/* Consider using a CSS framework like Bootstrap or Tailwind CSS for a pre-styled sidebar */
+
+/* Main content area styling */
+.col-12.col-md-10 {
+  background-color: #fff; /* White background for main content */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 30px;
+}
+
+.wrapper {
+  padding: 20px;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-control[type="number"] {
+  width: 70px; /* Adjust width for number fields */
+}
+
+.form-control[type="text"],
+.form-control[type="email"] {
+  width: calc(100% - 70px); /* Adjust width for text and email fields based on number field width */
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+textarea.form-control {
+  height: 120px; /* Adjust textarea height */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+select.form-control {
+  height: 38px;
+}
+
+/* Button styling */
+.btn.btn-block.py-3 {
+  background-color: #38a3a5; /* Blue button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn.btn-block.py-3:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Image preview styling */
+.mt-3.mr-2 {
+  border: 1px solid #ddd; /* Add a light border to images */
+  padding: 5px; /* Add some padding around images */
+}
+
+/* Error handling (optional) */
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
