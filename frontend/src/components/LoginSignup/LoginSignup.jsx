@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginSignup.css';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
@@ -22,8 +23,10 @@ const LoginSignup = () => {
         email,
         password,
       });
-
+  
       if (response.status === 200) {
+        // Store the token in cookies
+        Cookies.set('token', response.data.token, { expires: 7 }); // Token expires in 7 days
         navigate('/home');
       } else {
         console.log('Login failed');

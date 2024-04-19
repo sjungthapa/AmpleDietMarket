@@ -1,7 +1,7 @@
 import React from 'react';
-import "./Header.css";
-import logo from "../Assets/brand1.png";
-import callicon from "../Assets/call icon.svg";
+import "../App.css";
+import logo from "./Assets/brand1.png";
+// import callicon from "./Assets/call icon.svg";
 import { BiSearchAlt, BiUser } from 'react-icons/bi';
 import { BsHeart, BsCart2 } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
@@ -22,17 +22,17 @@ const Header = () => {
 
             <div className='contact-social-cont'>
 
-                <div className='contact'>
+                {/* <div className='contact'>
                     <img src={callicon} alt="" />
                     <p>Call Us <br /> <span>+009000000</span> </p>
-                </div>
+                </div> */}
 
                 <div className='social-icon-cont'>
                 <div className='headerIcon'>
-    <Link to="/login">
-        <BiUser className='headerIcon-size' />
-    </Link>
-</div>
+                <Link to="/login">
+                <BiUser className='headerIcon-size' />
+                </Link>
+                </div>
 
                     <div className='headerIcon'>
                         <BsHeart className='headerIcon-size' />

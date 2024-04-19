@@ -1,38 +1,130 @@
-.App {
-  text-align: center;
+/* Navbar Styling */
+.navbar {
+  background-color: #000000;
+  padding: 1rem 2rem; /* Maintain current padding for aesthetics */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Brand Logo */
+.navbar-brand img {
+  width: 150px; /* Adjust width based on your logo size */
+  height: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Search Bar */
+.input-group {
+  width: 100%; /* Fills available space within its column */
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  height: 4.5rem; /* Increased height for longer search bar */
+}
+
+#search_field {
+  padding: 1rem; /* Maintain current padding for better usability */
+  border: none;
+  font-size: 1rem;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+/* .input-group-append {
+  background-color: #2bee38;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+} */  
+
+#search_btn {
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+}
+
+/* Login & Cart Section */
+.col-md-3.text-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#login_btn,
+#cart_count {
+  background-color: #30dc4a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+#cart {
+  color: white;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* Responsiveness (Optional) */
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens here */
+  .navbar-brand img {
+    width: 100px; /* Adjust for smaller screens */
+  }
+  .input-group {
+    font-size: 0.8rem;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Container */
+.container {
+  padding: 0 2rem; /* Add some horizontal padding for better aesthetics */
+}
+/* Home page */
+#products_heading {
+  margin-top: 1.8rem;
+}
+
+.card {
+  height: 100%;
+}
+
+.card-title a {
+  color: #2e2e2e;
+}
+
+.card-title a:hover {
+  color: #fa9c23;
+  text-decoration: none;
+}
+
+.card-body {
+  padding-left: 0;
+}
+
+.card-text {
+  font-size: 1.4rem;
+}
+
+#view_btn {
+  background-color: #fa9c23;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.card-img-top {
+  width: 200px;
+  height: 150px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ratings {
+  font-size: 1.2rem;
+  color: #fdcc0d;
+}
+
+#no_of_reviews {
+  font-size: 0.85rem;
+  color: grey;
+  margin-left: 0.5rem;
 }
