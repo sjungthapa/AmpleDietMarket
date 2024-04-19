@@ -39,7 +39,7 @@ const NewProduct = ({ history }) => {
     
         try {
             // Send form data to the backend
-            await axios.post('admin/product/new', formData, {
+            await axios.post('http://localhost:4000/admin/product/new', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

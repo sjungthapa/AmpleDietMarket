@@ -11,11 +11,11 @@ app.use(express.json());
 dotenv.config({ path: "Backend/config/config.env" });
 
 // Importing the routes
-const products = require('./routes/product');
+const product = require('./routes/product');
 const auth = require('./routes/auth');
 
 // Mounting the routes
-app.use('/api/v1', products);
+app.use('/api/v1', product);
 app.use('/api/v1', auth);
 
 module.exports = app;
