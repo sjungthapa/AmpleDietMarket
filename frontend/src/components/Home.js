@@ -1,24 +1,37 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import '../App.css';
 import MetaData from './layout/MetaData';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../actions/productActions';
+
 const Home = () => {
+
+  const disptach = useDispatch();
+
+  const { loading, products, error, productsCount } = useSelector(state => state.products)
+  
+
+  useEffect(() => {
+      disptach(getProducts());
+  }, [disptach])
   return (
     <Fragment>
-      <Metadata title={'Buy the best grocery'}/>
+      <MetaData title={'Buy the best grocery'}/>
       <h1 id="products_heading">Latest Products</h1>
       <section id="products" className="container mt-5">
         <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-3 my-3">
+          {products && products.map(product => (
+            <div key={product._id} className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-3 rounded">
               <img
                 className="card-img-top mx-auto"
-                src="https://m.media-amazon.com/images/I/617NtexaW2L._AC_UY218_.jpg"
+                src="https://static.toiimg.com/photo/105672842.cms"
                 alt="Product"
               />
               <div className="card-body d-flex flex-column">
                 <h5 className="card-title">
-                  <a href="/">128GB Solid Storage Memory card - SanDisk Ultra</a>
+                  <a href="/">{product.name}</a>
                 </h5>
                 <div className="ratings mt-auto">
                   <div className="rating-outer">
@@ -31,6 +44,10 @@ const Home = () => {
               </div>
             </div>
           </div>
+
+            
+          ))}
+          
         </div>
       </section>
     </Fragment>
