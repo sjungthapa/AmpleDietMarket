@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Home from './components/Home';
+import Login from './components/user/Login';
 
 function App() {
   return (
@@ -9,9 +10,10 @@ function App() {
       <div className="App">
         <Header />
         <div className="container container-fluid">
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
         </div>
       </div>
     </Router>
