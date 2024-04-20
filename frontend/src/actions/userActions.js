@@ -38,4 +38,13 @@ export const login = (email, password) => async (dispatch) => {
             payload: error.response.data.message
         })
     }
+
+    
+}
+
+//clear errors
+export const clearErrors = () => (disptach) => {
+    disptach({
+        type: CLEAR_ERRORS
+    })
 }
