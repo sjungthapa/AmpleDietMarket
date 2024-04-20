@@ -11,6 +11,8 @@ const Login = ({ history }) => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
+
+  
   const { isAuthenticated, error, loading } = useSelector(state => state.auth);
 
   useEffect(() => {
