@@ -28,7 +28,7 @@ export const login = (email, password) => async (dispatch) => {
                 email,
                 password
             }, config);
-        
+        console.log('asas')
             if (data && data.user) {
                 dispatch({
                     type: LOGIN_SUCCESS,
@@ -64,49 +64,42 @@ export const register = (userData) => async (dispatch) => {
     try {
         dispatch({
             type: REGISTER_USER_REQUEST
-        })
+        });
 
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }
+        };
 
-        try {
-            const { data } = await axios.post('http://localhost:4000/api/v1/register', {
-                userData,
-            }, config);
+        // Remove the enclosing object when passing userData
+        const { data } = await axios.post('http://localhost:4000/api/v1/register', userData, config);
         
-            if (data && data.user) {
-                dispatch({
-                    type: REGISTER_USER_SUCCESS,
-                    payload: data.user
-                });
-            } else {
-                dispatch({
-                    type: REGISTER_USER_FAIL,
-                    payload: "Invalid response format"
-                });
-            }
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                dispatch({
-                    type: LOGIN_FAIL,
-                    payload: error.response.data.message
-                });
-            } else {
-                dispatch({
-                    type: LOGIN_FAIL,
-                    payload: "An error occurred"
-                });
-            }
+        if (data && data.user) {
+            dispatch({
+                type: REGISTER_USER_SUCCESS,
+                payload: data.user
+            });
+        } else {
+            dispatch({
+                type: REGISTER_USER_FAIL,
+                payload: "Invalid response format"
+            });
         }
     } catch (error) {
-        // Handle any errors that occurred during dispatch or other synchronous operations
-        console.error("An error occurred during login:", error);
+        if (error.response && error.response.data && error.response.data.message) {
+            dispatch({
+                type: REGISTER_USER_FAIL,
+                payload: error.response.data.message
+            });
+        } else {
+            dispatch({
+                type: REGISTER_USER_FAIL,
+                payload: "An error occurred"
+            });
+        }
     }
-}
-
+};
 //clear errors
 export const clearErrors = () => (dispatch) => {
     dispatch({
