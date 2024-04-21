@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MetaData from '../layout/MetaData'
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,20 +11,21 @@ const Login = ({ history }) => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   
-  const { isAuthenticated, error, loading } = useSelector(state => state.auth);
+  const { idAuthenticated, error, loading } = useSelector(state => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      history.push('/home');
+    if (idAuthenticated) {
+      navigate('/');
     }
 
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history]);
+  }, [dispatch, alert, idAuthenticated, error, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();

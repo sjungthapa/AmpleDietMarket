@@ -3,7 +3,7 @@ import '../App.css';
 import MetaData from './layout/MetaData';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../actions/productActions';
+// import { getProducts } from '../actions/productActions';
 
 const Home = () => {
 
@@ -12,9 +12,9 @@ const Home = () => {
   const { loading, products, error, productsCount } = useSelector(state => state.products)
   
 
-  useEffect(() => {
-      disptach(getProducts());
-  }, [disptach])
+  // useEffect(() => {
+  //     disptach(getProducts());
+  // }, [disptach])
   return (
     <Fragment>
       <MetaData title={'Buy the best grocery'}/>

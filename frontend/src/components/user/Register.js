@@ -22,12 +22,12 @@ const Register = () => {
   const navigate = useNavigate();
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { isAuthenticated, error, loading } = useSelector(
+  const { idAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (idAuthenticated) {
       navigate("/");
     }
 
@@ -38,7 +38,7 @@ const Register = () => {
   }
   
   
-  }, [dispatch, alert, isAuthenticated, error, navigate]);
+  }, [dispatch, alert, idAuthenticated, error, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
