@@ -4,7 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 
 const crypto = require("crypto");
-const cloudinary = require("cloudinary"); // Import Cloudinary v2
+  // Import Cloudinary v2
 const { Console } = require('console');
 
 // Configure Cloudinary
