@@ -29,7 +29,7 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         try {
-            const { data } = await axios.post('http://localhost:4000/api/v1/login', {
+            const { data } = await axios.post('/api/v1/login', {
                 email,
                 password
             }, config);
@@ -77,7 +77,7 @@ export const register = (userData) => async (dispatch) => {
         };
 
         // Remove the enclosing object when passing userData
-        const { data } = await axios.post('http://localhost:4000/api/v1/register', userData, config);
+        const { data } = await axios.post('/api/v1/register', userData, config);
         
         if (data && data.user) {
             dispatch({
@@ -120,7 +120,7 @@ export const loadUser = (userData) => async (dispatch) => {
         };
 
         
-        const { data } = await axios.get('http://localhost:4000/api/v1/me');
+        const { data } = await axios.get('/api/v1/me');
         
         if (data && data.user) {
             dispatch({
@@ -152,7 +152,7 @@ export const logout = () => async (dispatch) => {
     try {
         
 
-        await axios.get('http://localhost:4000/api/v1/logout');
+        await axios.get('/api/v1/logout');
         
         dispatch({
             type: LOGOUT_SUCCESS

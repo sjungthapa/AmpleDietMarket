@@ -16,7 +16,41 @@ module.exports = (err, req, res, next) => {
     if(process.env.NODE_ENV === 'Production') {
         let error = {...err}
 
-        error.message = err.message
+        error.message = err.message;
+
+         //Handling Mongoose validation Error
+    if (err.name === "ValidationError") {
+        const message = Object.values(err.errors).map((value) => value.message);
+        error = new ErrorHandler(message, 400);
+      }
+  
+      // Wrong Mongoose Object ID Error
+      if (err.name === "CastError") {
+        const message = `Resource not found. Invalid: ${err.path}`;
+        error = new ErrorHandler(message, 400);
+      }
+  
+      // Handling Mongoose duplicate key errors
+  
+      if (err.code == 11000) {
+        const message = `Account already register with this ${Object.keys(
+          err.keyValue
+        )}.`;
+        error = new ErrorHandler(message, 400);
+      }
+  
+      // Handling wrong JWT error
+      if (err.name === "JsonWebTokenError") {
+        const message = `JSON Web Token is invalid. Try Again!!!`;
+        error = new ErrorHandler(message, 400);
+      }
+  
+      // Handling Expired JWT error
+      if (err.name === "TokenExpiredError") {
+        const message = `JSON Web Token is expired. Try Again!!!`;
+        error = new ErrorHandler(message, 400);
+      }
+  
 
         res.status(err.statusCode).json({
             success: false,

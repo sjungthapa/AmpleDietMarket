@@ -2,6 +2,8 @@ const User = require('../models/user');
 const Errorhandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
+const cloudinary = require("cloudinary");
+
 
 const crypto = require("crypto");
   // Import Cloudinary v2
