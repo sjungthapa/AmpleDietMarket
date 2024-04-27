@@ -1,7 +1,8 @@
 import React, {Fragment, useEffect} from 'react';
 import '../App.css';
 import MetaData from './layout/MetaData';
-import Product from './product/Product'
+import Product from './product/Product';
+import Loader from './layout/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../actions/productActions';
