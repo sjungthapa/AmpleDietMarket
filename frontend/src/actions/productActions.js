@@ -12,7 +12,7 @@ export const getProducts = () => async (disptach) => {
 
         disptach({type: ALL_PRODUCTS_REQUEST})
 
-        const { data } = await axios.get('http://localhost:4000/api/v1/products')
+        const { data } = await axios.get('/api/v1/products')
         
         disptach({
             type: ALL_PRODUCTS_SUCCESS,
