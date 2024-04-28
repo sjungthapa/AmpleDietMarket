@@ -9,7 +9,9 @@ import Profile from './components/user/Profile';
 
 import { loadUser } from './actions/userActions';
 import store from './store'
-// import Dashboard from './components/admin/Dashboard';
+import Dashboard from './components/admin/Dashboard';
+import NewProduct from './components/admin/NewProduct';
+import ProductDetails from './components/product/ProductDetails';
 
 function App() {
 
@@ -27,7 +29,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/me" element={<Profile />} />
-            {/* <Route path="dashboard" element={<Dashboard />} /> */}
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path ="/product" element={<NewProduct />} />
           </Routes>
         </div>
       </div>

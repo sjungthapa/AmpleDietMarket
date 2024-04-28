@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react'
-import { link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import MetaData from '../layout/MetaData'
-import Loader from '../layout/loader'
+// import Loader from '../layout/loader'
 import Sidebar from './Sidebar'
 
 const Dashboard = () => {
