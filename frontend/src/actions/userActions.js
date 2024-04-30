@@ -10,6 +10,10 @@ import {
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    UPDATE_PROFILE_RESET,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
     CLEAR_ERRORS
@@ -76,7 +80,6 @@ export const register = (userData) => async (dispatch) => {
             }
         };
 
-        // Remove the enclosing object when passing userData
         const { data } = await axios.post('/api/v1/register', userData, config);
         
         if (data && data.user) {
@@ -164,6 +167,50 @@ export const logout = () => async (dispatch) => {
         });
     }
 };
+
+// Update user
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({
+            type: UPDATE_PROFILE_REQUEST
+        });
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        
+        const { data } = await axios.put('/api/v1/me/update', userData, config);
+        
+        if (data && data.user) {
+            dispatch({
+                type: UPDATE_PROFILE_SUCCESS,
+                payload: data.success
+            });
+        } else {
+            dispatch({
+                type: UPDATE_PROFILE_FAIL,
+                payload: "Invalid response format"
+            });
+        }
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+            dispatch({
+                type: UPDATE_PROFILE_FAIL,
+                payload: error.response.data.message
+            });
+        } else {
+            dispatch({
+                type: UPDATE_PROFILE_FAIL,
+                payload: "An error occurred"
+            });
+        }
+    }
+};
+
+
+
 //clear errors
 export const clearErrors = () => (dispatch) => {
     dispatch({

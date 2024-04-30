@@ -3,17 +3,18 @@ import { Carousel } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 
 import Loader from '../layout/Loader'
-import Metadata from '../layout/MetaData'
+import MetaData from '../layout/MetaData'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { addItemToCart } from '../../actions/cartActions'
 
 const ProductDetails = () => {
 
 
     const [quantity, setQuantity] = useState(1)
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
     const { id } = useParams();
   
     const alert = useAlert();
@@ -21,15 +22,20 @@ const ProductDetails = () => {
     const { loading, error, product } = useSelector(state => state.productDetails)
 
     useEffect(() => {
-        disptach(getProductDetails(id));
+        dispatch(getProductDetails(id));
 
         if (error) {
             alert.error(error);
-        disptach(clearErrors());
+        dispatch(clearErrors());
         }
 
 
-    }, [disptach, alert, error, id])
+    }, [dispatch, alert, error, id])
+
+    const addToCart = () => {
+      dispatch(addItemToCart(id, quantity)); 
+      alert.success('Product added to cart');
+  };
 
     const increaseQty = () => {
         const count = document.querySelector('.count')
@@ -54,8 +60,9 @@ const ProductDetails = () => {
 
   return (
     <Fragment>
+      <MetaData title={'Buy the best grocery'}/>
 
-    {loading ? <loader /> : (
+    {loading ? <Loader /> : (
         <Fragment>
         <div className="row justify-content-around">
         <div className="col-12 col-lg-5 img-fluid" id="product_image">
@@ -87,7 +94,7 @@ const ProductDetails = () => {
   
             <span className="btn btn-primary plus"onClick={increaseQty}>+</span>
           </div>
-          <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4">Add to Cart</button>
+          <button type="button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} onClick={addToCart}>Add to Cart</button>
   
           <hr />
   
