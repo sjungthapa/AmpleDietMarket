@@ -18,6 +18,9 @@ import ProductDetails from './components/product/ProductDetails';
 
 //cart content
 import Cart from './components/cart/Cart'
+import Shipping from './components/cart/Shipping';
+import ConfirmOrder from './components/cart/ConfirmOrder';
+
 
 
 
@@ -44,6 +47,8 @@ function App() {
             <Route path="/me/update" element={<UpdateProfile />} />
 
             <Route path="/cart" element={<Cart />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/order/confirm" element={<ConfirmOrder/>} />
 
 
             <Route path="/product/:id" element={<ProductDetails />} />

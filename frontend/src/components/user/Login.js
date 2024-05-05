@@ -1,31 +1,36 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import MetaData from '../layout/MetaData'
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Loader from "../layout/Loader";
+import MetaData from "../layout/MetaData";
+
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
 
-const Login = ({ history }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+  const location = useLocation();
   const alert = useAlert();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  
-  const { idAuthenticated, error, loading } = useSelector(state => state.auth);
+  const { isAuthenticated, error, loading } = useSelector(
+    (state) => state.auth
+  );
+
+  const redirect = location.search ? new URLSearchParams(location.search).get("redirect") || '/' : '/';
 
   useEffect(() => {
-    if (idAuthenticated) {
-      navigate('/');
+    if (isAuthenticated) {
+      navigate(redirect);
     }
-
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, idAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error, navigate, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -35,10 +40,11 @@ const Login = ({ history }) => {
   return (
     <Fragment>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : (
         <Fragment>
-          <MetaData title={'Login'} />
+          <MetaData title={"Login"} />
+
           <div className="row wrapper">
             <div className="col-10 col-lg-5">
               <form className="shadow-lg" onSubmit={submitHandler}>
@@ -65,8 +71,10 @@ const Login = ({ history }) => {
                   />
                 </div>
 
-                <Link to="/password/forgot" className="float-right mb-4">Forgot Password?</Link>
-  
+                <Link to="/password/forgot" className="float-right mb-4">
+                  Forgot Password?
+                </Link>
+
                 <button
                   id="login_button"
                   type="submit"
@@ -75,7 +83,9 @@ const Login = ({ history }) => {
                   LOGIN
                 </button>
 
-                <Link to="/register" className="float-right mt-3">New User?</Link>
+                <Link to="/register" className="float-right mt-3">
+                  New User?
+                </Link>
               </form>
             </div>
           </div>
