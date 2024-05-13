@@ -4,6 +4,7 @@ import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
+import OAuth from "../OAuth";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -138,6 +139,9 @@ const Register = () => {
                 </div>
               </div>
             </div>
+
+            <OAuth />
+
             <button
               id="register_button"
               type="submit"

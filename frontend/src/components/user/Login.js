@@ -6,6 +6,7 @@ import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
+import OAuth from "../OAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -82,6 +83,7 @@ const Login = () => {
                 >
                   LOGIN
                 </button>
+                <OAuth />
 
                 <Link to="/register" className="float-right mt-3">
                   New User?

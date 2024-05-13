@@ -3,6 +3,8 @@ const Errorhandler = require('../utils/errorhandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 const cloudinary = require("cloudinary");
+const bcrypt = require('bcrypt');
+
 
 
 const crypto = require("crypto");
@@ -226,3 +228,42 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// Signin with google  auth controller=> /api/v1/google 
+
+exports.google = catchAsyncErrors(async (req, res, next) => {
+  // Destructure user data from the request body
+  const { displayName, email, avatar } = req.body;
+
+  try {
+    // Check if the user already exists in the database
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      const result = await cloudinary.v2.uploader.upload(avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+      });
+
+      // Generate a random password for the new Google user
+      const generatedPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+
+      // Create a new user document with the generated password
+      user = await User.create({
+        name: displayName,
+        hashedPassword,
+        email,
+        avatar: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+      });
+    }
+
+    // Send back user data, including the role, and token in the response
+    sendToken(user, 200, res);
+  } catch (error) {
+    next(error);
+  }
+});
