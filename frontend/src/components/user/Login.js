@@ -1,37 +1,37 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Loader from "../layout/Loader";
 import MetaData from "../layout/MetaData";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
-import OAuth from "../OAuth";
 
-const Login = () => {
+const Login = ({ location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const history = useHistory();
+
   const alert = useAlert();
+
   const dispatch = useDispatch();
 
-  const { isAuthenticated, error, loading } = useSelector(
+  const { idAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
 
-  const redirect = location.search ? new URLSearchParams(location.search).get("redirect") || '/' : '/';
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate(redirect);
+    if (idAuthenticated) {
+      history.push(redirect);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, navigate, redirect]);
+  }, [dispatch, alert, idAuthenticated, error, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -83,7 +83,6 @@ const Login = () => {
                 >
                   LOGIN
                 </button>
-                <OAuth />
 
                 <Link to="/register" className="float-right mt-3">
                   New User?

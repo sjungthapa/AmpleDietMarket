@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'; // Import useHistory
 import MetaData from '../layout/MetaData';
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +8,10 @@ import { addItemToCart, removeItemFromCart } from '../../actions/cartActions';
 const Cart = () => {
     const dispatch = useDispatch();
     const alert = useAlert();
-    const navigate = useNavigate(); 
+    const history = useHistory(); // Use useHistory instead of useNavigate
 
     const { cartItems } = useSelector(state => state.cart);
-    const idAuthenticated = useSelector((state) => state.auth.idAuthenticated);
+    const idAuthenticated = useSelector((state) => state.auth.idAuthenticated); 
 
     const removeCartItemHandler = (id) => {
         dispatch(removeItemFromCart(id));
@@ -41,9 +41,9 @@ const Cart = () => {
 
     const checkoutHandler = () => {
         if (idAuthenticated) {
-            navigate("/shipping"); // Redirect to shipping page if user is authenticated
+            history.push("/shipping"); // Redirect to shipping page if user is authenticated
           } else {
-            navigate("/login?redirect=shipping"); // Redirect to login page if user is not authenticated
+            history.push("/login?redirect=shipping"); // Redirect to login page if user is not authenticated
           }
         };
 

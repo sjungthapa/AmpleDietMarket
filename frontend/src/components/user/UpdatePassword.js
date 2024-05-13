@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Change useHistory to useNavigate
+import { useNavigate } from "react-router-dom"; // Changed from useHistory
 
 import MetaData from "../layout/MetaData";
 
@@ -14,7 +14,7 @@ const UpdatePassword = () => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Change useHistory to useNavigate
+  const navigate = useNavigate(); // Changed from useHistory
 
   const { error, isUpdated, loading } = useSelector((state) => state.user);
 
@@ -27,7 +27,7 @@ const UpdatePassword = () => {
     if (isUpdated) {
       alert.success("Password updated successfully");
 
-      navigate("/me"); // Use navigate instead of history.push
+      navigate("/me"); // Changed from history.push
 
       dispatch({
         type: UPDATE_PASSWORD_RESET,

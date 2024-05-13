@@ -3,12 +3,13 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/userActions";
-import { useNavigate } from "react-router-dom"; // Change useHistory to useNavigate
+import { useHistory } from "react-router-dom"; // Import useHistory instead of useNavigate
+
 import GoogleButton from "react-google-button";
 
 export default function OAuth() {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Change useHistory to useNavigate
+  const history = useHistory(); // Use useHistory instead of useNavigate
 
   const handleGoogleClick = async () => {
     try {
@@ -37,7 +38,7 @@ export default function OAuth() {
       // Save token to local storage
 
       dispatch(login(data.user));
-      navigate("/"); // Use navigate instead of history.push
+      history.push("/"); // Use history.push instead of navigate
       // Redirect based on user role
     } catch (error) {
       console.error("Unable to login with Google", error);

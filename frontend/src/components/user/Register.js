@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom"; // Changed from useNavigate
 import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,26 +20,25 @@ const Register = () => {
     "/images/default_avatar.jpg"
   );
 
-  const navigate = useNavigate();
+  const history = useHistory(); // Changed from useNavigate
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { idAuthenticated, error, loading } = useSelector(
+  const { idAuthenticated, error, loading } = useSelector( // Changed from idAuthenticated
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (idAuthenticated) {
-      navigate("/");
+    if (idAuthenticated) { // Changed from idAuthenticated
+      history.push("/"); // Changed from navigate("/")
     }
 
     if (error) {
       console.error("Error:", error);
       const errorMessage = error.message || "An error occurred.";
       alert.error(errorMessage);
-  }
-  
-  
-  }, [dispatch, alert, idAuthenticated, error, navigate]);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, alert, idAuthenticated, error, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -140,7 +139,7 @@ const Register = () => {
               </div>
             </div>
 
-            <OAuth />
+            
 
             <button
               id="register_button"

@@ -3,7 +3,7 @@ import MetaData from '../layout/MetaData';
 import CheckoutSteps from './CheckoutSteps';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShippingInfo } from '../../actions/cartActions';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Shipping = () => {
     const { shippingInfo } = useSelector(state => state.cart);
@@ -13,12 +13,12 @@ const Shipping = () => {
     const [phoneNo, setPhoneNo] = useState(shippingInfo ? shippingInfo.phoneNo : '');
 
     const dispatch = useDispatch();
-    const navigate = useNavigate(); 
+    const history = useHistory(); 
 
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(saveShippingInfo({ address, city, phoneNo }));
-        navigate('/order/confirm');
+        history.push('/order/confirm');
     };
 
     return (
