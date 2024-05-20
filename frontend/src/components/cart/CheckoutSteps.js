@@ -1,24 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
   return (
-    <div className="checkout-progress d-flex justify-content-center mt-5">
+    <div className="checkout-progress d-flex justify-content-center mt-5 ">
       {shipping ? (
-        <Link to="/shipping" className="float-right">
+        <Link to="shipping" className="float-right">
           <div className="triangle2-active"></div>
           <div className="step active-step">Shipping</div>
           <div className="triangle-active"></div>
         </Link>
       ) : (
-        <Link to="#!" disabled>
-          <div className="triangle2-incomplete"></div>
+        <Link to="#!" disbaled>
+          <div className="tringle2-incomplete"></div>
           <div className="step incomplete">Shipping</div>
-          <div className="triangle-incomplete"></div>
+          <div className="tringle-incomplete"></div>
         </Link>
       )}
 
-      {/* Fix the rendering of Confirm Order */}
       {confirmOrder ? (
         <Link to="/order/confirm" className="float-right">
           <div className="triangle2-active"></div>
@@ -26,7 +25,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
           <div className="triangle-active"></div>
         </Link>
       ) : (
-        <Link to="#!" disabled>
+        <Link to="#!" disbaled>
           <div className="triangle2-incomplete"></div>
           <div className="step incomplete">Confirm Order</div>
           <div className="triangle-incomplete"></div>
@@ -40,7 +39,7 @@ const CheckoutSteps = ({ shipping, confirmOrder, payment }) => {
           <div className="triangle-active"></div>
         </Link>
       ) : (
-        <Link to="#!" disabled>
+        <Link to="#!" disbaled>
           <div className="triangle2-incomplete"></div>
           <div className="step incomplete">Payment</div>
           <div className="triangle-incomplete"></div>

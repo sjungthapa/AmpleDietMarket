@@ -50,7 +50,7 @@ const ConfirmOrder = ({ history }) => {
           </p>
           <p className="mb-4">
             <b>Address:</b>{" "}
-            {`${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`}
+            {`${shippingInfo.address}, ${shippingInfo.city}`}
           </p>
 
           <hr />
@@ -62,7 +62,7 @@ const ConfirmOrder = ({ history }) => {
               <div className="cart-item my-1" key={item.product}>
                 <div className="row">
                   <div className="col-4 col-lg-2">
-                    <img src={item.image} alt="Laptop" height="45" width="65" />
+                    <img src={item.image} alt="Grocery" height="45" width="65" />
                   </div>
 
                   <div className="col-5 col-lg-6">
@@ -71,8 +71,8 @@ const ConfirmOrder = ({ history }) => {
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                     <p>
-                      {item.quantity} x ${item.price} ={" "}
-                      <b>${(item.quantity * item.price).toFixed(2)}</b>
+                      {item.quantity} x Rs. {item.price} ={" "}
+                      <b>Rs. {(item.quantity * item.price).toFixed(2)}</b>
                     </p>
                   </div>
                 </div>
@@ -89,21 +89,21 @@ const ConfirmOrder = ({ history }) => {
             <p>
               Subtotal:{" "}
               <span className="order-summary-values">
-                ${itemsPrice.toFixed(2)}
+                Rs. {itemsPrice.toFixed(2)}
               </span>
             </p>
             <p>
               Shipping:{" "}
-              <span className="order-summary-values">${shippingPrice}</span>
+              <span className="order-summary-values">Rs. {shippingPrice}</span>
             </p>
             <p>
-              Tax: <span className="order-summary-values">${taxPrice}</span>
+              Tax: <span className="order-summary-values">Rs. {taxPrice}</span>
             </p>
 
             <hr />
 
             <p>
-              Total: <span className="order-summary-values">${totalPrice}</span>
+              Total: <span className="order-summary-values">Rs. {totalPrice}</span>
             </p>
 
             <hr />

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom"; // Changed from useNavigate
+import { useHistory } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
 
@@ -22,7 +22,7 @@ const UpdateProfile = () => {
 
   const alert = useAlert();
   const dispatch = useDispatch();
-  const history = useHistory(); // Changed from useNavigate
+  const history = useHistory();
 
   const { user } = useSelector((state) => state.auth);
   const { error, isUpdated, loading } = useSelector((state) => state.user);
@@ -45,7 +45,7 @@ const UpdateProfile = () => {
       alert.success("User updated successfully");
       dispatch(loadUser());
 
-      history.push("/me"); // Changed from navigate("/me")
+      history.push("/me");
 
       dispatch({
         type: UPDATE_PROFILE_RESET,

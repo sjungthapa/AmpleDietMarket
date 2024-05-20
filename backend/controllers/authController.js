@@ -1,39 +1,23 @@
-const User = require('../models/user');
-const Errorhandler = require('../utils/errorhandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const sendToken = require('../utils/jwtToken');
-const cloudinary = require("cloudinary");
-const bcrypt = require('bcrypt');
+const User = require("../models/user");
 
-
+const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const sendToken = require("../utils/jwtToken");
+const sendEmail = require("../utils/sendEmail");
 
 const crypto = require("crypto");
-  // Import Cloudinary v2
-const { Console } = require('console');
+const cloudinary = require("cloudinary");
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: "dutcqdnya",
-  api_key: "361317831113384",
-  api_secret: "XiDuG-0UyXwh2cj5EAfrE9jYvg4"
-});
-
-// Register a user => /api/v1/register
+// Register a user   => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-  // Upload avatar to Cloudinary
-  
   const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
     folder: "avatars",
     width: 150,
     crop: "scale",
   });
 
-
-
-
   const { name, email, password } = req.body;
 
-  // Create user
   const user = await User.create({
     name,
     email,
@@ -44,63 +28,119 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     },
   });
 
-  // Send token
   sendToken(user, 200, res);
 });
 
-// Login user => /api/v1/login
+// Login User  =>  /a[i/v1/login
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // Checks if email and password are entered by user
+  // Checks if email and password is entered by user
   if (!email || !password) {
-    return next(new Errorhandler('Please enter email and password', 400));
+    return next(new ErrorHandler("Please enter email & password", 400));
   }
 
   // Finding user in database
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(new Errorhandler('Invalid Email or Password', 401));
+    return next(new ErrorHandler("Invalid Email or Password", 401));
   }
 
-  // Check if password is correct or not
+  // Checks if password is correct or not
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
-    return next(new Errorhandler('Invalid Email or Password', 401));
+    return next(new ErrorHandler("Invalid Email or Password", 401));
   }
 
-  // Send token
   sendToken(user, 200, res);
 });
 
-// Logout user => /api/v1/logout
-exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
-  res.cookie('token', null, {
-    expires: new Date(Date.now()),
-    httpOnly: true
-  });
+// Forgot Password   =>  /api/v1/password/forgot
+exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
 
-  res.status(200).json({
-    success: true,
-    message: 'Successfully logged out'
-  });
-});
+  if (!user) {
+    return next(new ErrorHandler("User not found with this email", 404));
+  }
 
-// Get currently logged in user details => /api/v1/me
-exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  // Create reset password url
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+
+  const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
+
   try {
-    const user = await User.findById(req.user._id);
+    await sendEmail({
+      email: user.email,
+      subject: "Password recovery",
+      message,
+    });
 
     res.status(200).json({
       success: true,
-      user
+      message: `Email sent to: ${user.email}`,
     });
   } catch (error) {
-    console.log(JSON.stringify(error));
-    next(error);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    return next(new ErrorHandler(error.message, 500));
   }
+});
+
+// Reset Password   =>  /api/v1/password/reset/:token
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+  // Hash URL token
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        "Password reset token is invalid or has been expired",
+        400
+      )
+    );
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new ErrorHandler("Password does not match", 400));
+  }
+
+  // Setup new password
+  user.password = req.body.password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  sendToken(user, 200, res);
+});
+
+// Get currently logged in user details   =>   /api/v1/me
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
 });
 
 // Update / Change password   =>  /api/v1/password/update
@@ -156,8 +196,22 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//admin routes
-// get all users => /api/v1/admin/users
+// Logout user   =>   /api/v1/logout
+exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
+  });
+});
+
+// Admin Routes
+
+// Get all users => /api/v1/admin/users
 
 exports.allUsers = catchAsyncErrors(async (req, res, next) => {
   const users = await User.find();
@@ -167,7 +221,6 @@ exports.allUsers = catchAsyncErrors(async (req, res, next) => {
     users,
   });
 });
-
 
 // Get user details => /api/v1/admin/user/:id
 
@@ -226,44 +279,4 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
   });
-});
-
-// Signin with google  auth controller=> /api/v1/google 
-
-exports.google = catchAsyncErrors(async (req, res, next) => {
-  // Destructure user data from the request body
-  const { displayName, email, avatar } = req.body;
-
-  try {
-    // Check if the user already exists in the database
-    let user = await User.findOne({ email });
-
-    if (!user) {
-      const result = await cloudinary.v2.uploader.upload(avatar, {
-        folder: "avatars",
-        width: 150,
-        crop: "scale",
-      });
-
-      // Generate a random password for the new Google user
-      const generatedPassword = Math.random().toString(36).slice(-8);
-      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
-
-      // Create a new user document with the generated password
-      user = await User.create({
-        name: displayName,
-        hashedPassword,
-        email,
-        avatar: {
-          public_id: result.public_id,
-          url: result.secure_url,
-        },
-      });
-    }
-
-    // Send back user data, including the role, and token in the response
-    sendToken(user, 200, res);
-  } catch (error) {
-    next(error);
-  }
 });

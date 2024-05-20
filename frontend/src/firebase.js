@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBpJgwE3-Y2sz3eRcL84AdNO9-F4twgRDw",
-  authDomain: "ample-diet-market-f1b30.firebaseapp.com",
-  projectId: "ample-diet-market-f1b30",
-  storageBucket: "ample-diet-market-f1b30.appspot.com",
-  messagingSenderId: "574408439509",
-  appId: "1:574408439509:web:b9a15733e46c06d50d145c"
+  apiKey: "AIzaSyC8AYaSC3AARhwOGXdpU9hlonbNyCE98lk",
+  authDomain: "ampledietmarket.firebaseapp.com",
+  projectId: "ampledietmarket",
+  storageBucket: "ampledietmarket.appspot.com",
+  messagingSenderId: "844465417967",
+  appId: "1:844465417967:web:e83dcbbe7a9df3614cb51a"
 };
 
 // Initialize Firebase

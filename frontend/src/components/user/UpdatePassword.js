@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Changed from useHistory
+import { useHistory } from "react-router-dom";
 
 import MetaData from "../layout/MetaData";
 
@@ -9,12 +9,12 @@ import { updatePassword, clearErrors } from "../../actions/userActions";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 
 const UpdatePassword = () => {
-  const [oldPassword, setOldPassword] = useState("");
+  const [oldPassword, setoldPassword] = useState("");
   const [password, setPassword] = useState("");
 
   const alert = useAlert();
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Changed from useHistory
+  const history = useHistory();
 
   const { error, isUpdated, loading } = useSelector((state) => state.user);
 
@@ -27,13 +27,13 @@ const UpdatePassword = () => {
     if (isUpdated) {
       alert.success("Password updated successfully");
 
-      navigate("/me"); // Changed from history.push
+      history.push("/me");
 
       dispatch({
         type: UPDATE_PASSWORD_RESET,
       });
     }
-  }, [dispatch, alert, error, isUpdated, navigate]);
+  }, [dispatch, alert, error, history, isUpdated]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -53,18 +53,18 @@ const UpdatePassword = () => {
           <form className="shadow-lg" onSubmit={submitHandler}>
             <h1 className="mt-2 mb-5">Update Password</h1>
             <div className="form-group">
-              <label htmlFor="old_password_field">Old Password</label>
+              <label for="old_password_field">Old Password</label>
               <input
                 type="password"
                 id="old_password_field"
                 className="form-control"
                 value={oldPassword}
-                onChange={(e) => setOldPassword(e.target.value)}
+                onChange={(e) => setoldPassword(e.target.value)}
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="new_password_field">New Password</label>
+              <label for="new_password_field">New Password</label>
               <input
                 type="password"
                 id="new_password_field"

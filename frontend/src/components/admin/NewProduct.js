@@ -18,8 +18,8 @@ const NewProduct = ({ history }) => {
   const [imagesPreview, setImagesPreview] = useState([]);
 
   const categories = [
+    "Meats",
     "Vegetables",
-    "Meat",
   ];
 
   const alert = useAlert();

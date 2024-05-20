@@ -6,10 +6,12 @@ import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors } from "../../actions/userActions";
+import OAuth from "../OAuth"
 
 const Login = ({ location }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState({});
 
   const history = useHistory();
 
@@ -17,25 +19,35 @@ const Login = ({ location }) => {
 
   const dispatch = useDispatch();
 
-  const { idAuthenticated, error, loading } = useSelector(
+  const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
-    if (idAuthenticated) {
+    if (isAuthenticated) {
       history.push(redirect);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, idAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error, history, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+
+    const errors = {};
+    if (!email) errors.email = "Email is required";
+    if (!password) errors.password = "Password is required";
+
+    if (Object.keys(errors).length > 0) {
+      setValidationError(errors);
+    } else {
+      setValidationError({});
+      dispatch(login(email, password));
+    }
   };
 
   return (
@@ -55,10 +67,11 @@ const Login = ({ location }) => {
                   <input
                     type="email"
                     id="email_field"
-                    className="form-control"
+                    className={`form-control ${validationError.email ? 'is-invalid' : ''}`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  {validationError.email && <div className="invalid-feedback">{validationError.email}</div>}
                 </div>
 
                 <div className="form-group">
@@ -66,10 +79,11 @@ const Login = ({ location }) => {
                   <input
                     type="password"
                     id="password_field"
-                    className="form-control"
+                    className={`form-control ${validationError.password ? 'is-invalid' : ''}`}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  {validationError.password && <div className="invalid-feedback">{validationError.password}</div>}
                 </div>
 
                 <Link to="/password/forgot" className="float-right mb-4">
@@ -87,6 +101,7 @@ const Login = ({ location }) => {
                 <Link to="/register" className="float-right mt-3">
                   New User?
                 </Link>
+                <OAuth />
               </form>
             </div>
           </div>

@@ -28,10 +28,12 @@ dotenv.config({ path: "Backend/config/config.env" });
 const product = require('./routes/product');
 const auth = require('./routes/auth');
 const order = require('./routes/order');
+const payment = require('./routes/payment');
 
 // Mounting the routes
 app.use('/api/v1', product);
 app.use('/api/v1', auth);
+app.use('/api/v1', payment);
 app.use('/api/v1', order);
 
 

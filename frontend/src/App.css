@@ -27,12 +27,12 @@ body {
 }
 
 nav {
-  background-color: #44de59;
+  background-color: #232f3e;
   padding: 1rem 1rem;
 }
 
 #search_btn {
-  background-color: #d758588c;
+  background-color: #febd69;
 }
 
 .input-group {
@@ -47,7 +47,7 @@ nav {
 
 #login_btn,
 #view_btn {
-  background-color: #d758588c;
+  background-color: #febd69;
   padding: 0.4rem 1.8rem;
   font-family: calibri;
 }
@@ -58,7 +58,7 @@ nav {
 }
 
 #cart_count {
-  background-color: #d758588c;
+  background-color: #febd69;
   padding: 0.2rem 0.5rem;
   border-radius: 0.2rem;
   color: black;
@@ -93,7 +93,7 @@ nav {
 }
 
 #view_btn {
-  background-color: #44de59;
+  background-color: #fa9c23;
   color: white;
 }
 
@@ -104,7 +104,7 @@ nav {
 
 .ratings {
   font-size: 1.2rem;
-  color: #44de59;
+  color: #fdcc0d;
 }
 
 #no_of_reviews {
@@ -113,6 +113,13 @@ nav {
   margin-left: 0.5rem;
 }
 
+/* Footer */
+footer {
+  margin-top: 8rem;
+  color: grey;
+  bottom: 0;
+  width: 100%;
+}
 
 /* Ratings */
 
@@ -300,13 +307,13 @@ nav {
 }
 
 .wrapper form .btn {
-  background-color: #44de59;
-  border-color: #44de59;
+  background-color: #fa9c23;
+  border-color: #fa9c23;
   color: white;
   margin-top: 2.5rem;
 }
 
-.wrapper form a { 
+.wrapper form a {
   font-size: 0.9rem;
   color: grey;
 }
@@ -388,7 +395,7 @@ nav {
   float: left;
   width: 0;
   border-top: 20px solid transparent;
-  border-left: 15px solid #44de59;
+  border-left: 15px solid #fa9c23;
   border-bottom: 20px solid transparent;
   margin-left: -1px;
 }
@@ -396,9 +403,9 @@ nav {
 .triangle2-active {
   width: 0;
   float: left;
-  border-top: 20px solid #44de59;
+  border-top: 20px solid #fa9c23;
   border-left: 15px solid #fff;
-  border-bottom: 20px solid #44de59;
+  border-bottom: 20px solid #fa9c23;
   margin-right: -1px;
 }
 
@@ -450,8 +457,8 @@ nav {
 }
 
 .update-btn {
-  background-color: #44de59;
-  border-color: #44de59;
+  background-color: #fa9c23;
+  border-color: #fa9c23;
   color: white;
 }
 
@@ -461,8 +468,8 @@ nav {
 
 /* Pagination */
 .page-item.active .page-link {
-  background-color: #44de59;
-  border-color: #44de59;
+  background-color: #fa9c23;
+  border-color: #fa9c23;
 }
 
 .page-link {

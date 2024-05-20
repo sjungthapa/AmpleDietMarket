@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom"; // Changed from useNavigate
+
+import { useHistory } from "react-router-dom";
 import MetaData from "../layout/MetaData";
+
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearErrors } from "../../actions/userActions";
@@ -20,25 +22,25 @@ const Register = () => {
     "/images/default_avatar.jpg"
   );
 
-  const history = useHistory(); // Changed from useNavigate
+  const history = useHistory();
+
   const alert = useAlert();
   const dispatch = useDispatch();
-  const { idAuthenticated, error, loading } = useSelector( // Changed from idAuthenticated
+
+  const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (idAuthenticated) { // Changed from idAuthenticated
-      history.push("/"); // Changed from navigate("/")
+    if (isAuthenticated) {
+      history.push("/");
     }
 
     if (error) {
-      console.error("Error:", error);
-      const errorMessage = error.message || "An error occurred.";
-      alert.error(errorMessage);
+      alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, idAuthenticated, error, history]);
+  }, [dispatch, alert, isAuthenticated, error, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -55,12 +57,14 @@ const Register = () => {
   const onChange = (e) => {
     if (e.target.name === "avatar") {
       const reader = new FileReader();
+
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
           setAvatar(reader.result);
         }
       };
+
       reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
@@ -70,6 +74,7 @@ const Register = () => {
   return (
     <Fragment>
       <MetaData title={"Register User"} />
+
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form
@@ -78,10 +83,11 @@ const Register = () => {
             encType="multipart/form-data"
           >
             <h1 className="mb-3">Register</h1>
+
             <div className="form-group">
-              <label htmlFor="name_field">Name</label>
+              <label htmlFor="email_field">Name</label>
               <input
-                type="text"
+                type="name"
                 id="name_field"
                 className="form-control"
                 name="name"
@@ -89,6 +95,7 @@ const Register = () => {
                 onChange={onChange}
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="email_field">Email</label>
               <input
@@ -100,6 +107,7 @@ const Register = () => {
                 onChange={onChange}
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="password_field">Password</label>
               <input
@@ -111,8 +119,9 @@ const Register = () => {
                 onChange={onChange}
               />
             </div>
+
             <div className="form-group">
-              <label htmlFor="avatar_upload"></label>
+              <label htmlFor="avatar_upload">Avatar</label>
               <div className="d-flex align-items-center">
                 <div>
                   <figure className="avatar mr-3 item-rtl">
@@ -129,7 +138,7 @@ const Register = () => {
                     name="avatar"
                     className="custom-file-input"
                     id="customFile"
-                    accept="image/*"
+                    accept="iamges/*"
                     onChange={onChange}
                   />
                   <label className="custom-file-label" htmlFor="customFile">
@@ -139,18 +148,17 @@ const Register = () => {
               </div>
             </div>
 
-            
-
             <button
               id="register_button"
               type="submit"
               className="btn btn-block py-3"
-              disabled={loading}
+              disabled={loading ? true : false}
             >
               REGISTER
             </button>
           </form>
         </div>
+        <OAuth />
       </div>
     </Fragment>
   );
